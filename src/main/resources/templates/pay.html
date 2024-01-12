@@ -3,7 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 	
-	<title>View Course</title>
+	<title>Payment</title>
 	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
@@ -12,7 +12,7 @@
 <div>
 
 		<h1>Why premium ? </h1>
-		<p>Listen to Latest Songs without any Add Break</p>
+		<p>Listen To The Latest Songs Without Any Interruption</p>
 		
     	<form id="payment-form">
 	        <button type="submit" class="buy-button" >BUY</button>
@@ -37,7 +37,7 @@ function createOrder() {
         .done(function(order) {
             order = JSON.parse(order);
             var options = {
-                "key": "rzp_test_nPcLYfgHHfFkoR",
+                "key": "rzp_test_pvGIc9JvXWZTVS",
                 "amount": order.amount_due.toString(),
                 "currency": "INR",
                 "name": "Tune Hub",
@@ -47,7 +47,7 @@ function createOrder() {
                     verifyPayment(response.razorpay_order_id, response.razorpay_payment_id, response.razorpay_signature);
                 },
                 "prefill": {
-                    "name": "Y NIKHIL REDDY",
+                    "name": "Your Name",
                     "email": "test@example.com",
                     "contact": "9999999999"
                 },
@@ -70,9 +70,11 @@ function verifyPayment(orderId, paymentId, signature) {
      $.post("/verify", { orderId: orderId, paymentId: paymentId, signature: signature })
          .done(function(isValid) {
              if (isValid) {
-                 console.log("Payment successful");
+                 alert("Payment successful");
+                 window.location.href = 'payment-success';
              } else {
-                 console.log("Payment failed");
+                 alert("Payment failed");
+                 window.location.href = 'payment-failure';
              }
          })
          .fail(function(error) {
